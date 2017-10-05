@@ -9,36 +9,35 @@ def get_words(text):
 
 
 def get_long_strings(strings, min_length):
-    result = [];
-    for item in strings:
-        if len(item) >= min_length:
-            result.append(item)
+    result = []
+    for substring in strings:
+        if len(substring) >= min_length:
+            result.append(substring)
     return result
 
 
 def get_news_files_list(path):
-    files = [];
+    files = []
     directory = os.fsencode(path)
-    for file in os.listdir(directory):
-        filename = os.fsdecode(file)
+    for file_entry in os.listdir(directory):
+        filename = os.fsdecode(file_entry)
         if filename.endswith(".json"):
-            files.append(path + '/' + filename);
-    return files;
+            files.append(path + '/' + filename)
+    return files
 
 
 def read_json_from_file(path):
-    with open(os.fsencode(filePath), 'rb') as f:
-        data = f.read();
-        chardet_result = chardet.detect(data)
+    with open(os.fsencode(path), 'rb') as f:
+        file_contents = f.read()
+        chardet_result = chardet.detect(file_contents)
 
-        return json.loads(data.decode(chardet_result['encoding']))
-    return data
+        return json.loads(file_contents.decode(chardet_result['encoding']))
 
 
 def index_words(words):
     result = {}
     for word in words:
-        word = word.lower();
+        word = word.lower()
         if word not in result:
             result[word] = 0
         result[word] += 1
